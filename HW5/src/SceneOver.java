@@ -1,11 +1,17 @@
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 public class SceneOver extends Scene{
 	JLabel[] labelArr;
 	Thread textBlinkThread;
+	Image img;
 	
 	SceneOver(){
 		System.out.println("SceneOver started");
@@ -35,6 +41,18 @@ public class SceneOver extends Scene{
 		labelArr[2].setForeground(Color.DARK_GRAY);
 		labelArr[3].setForeground(Color.RED);
 		
+		
+		
+		String imageResource = "/thunder.jpg";
+		Image myImage = null;
+		try {
+			myImage = ImageIO.read(getClass().getResourceAsStream(imageResource));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		ImageIcon icon = new ImageIcon(myImage);
+		img = icon.getImage();	
+		
 		for(int i = 0; i < labelArr.length; i++) {
 			labelArr[i].setHorizontalAlignment(JLabel.CENTER);
 			add(labelArr[i]);
@@ -53,5 +71,9 @@ public class SceneOver extends Scene{
 			}
 		});
 		textBlinkThread.start();
+	}
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		g.drawImage(img, 0, 0, getWidth(),getHeight(), null);
 	}
 }

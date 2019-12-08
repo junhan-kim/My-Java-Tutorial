@@ -13,11 +13,10 @@ public class Ball extends JComponent {
 	int distY;
 	Rectangle ballRect;	
 	Thread ballMoveThread;
-	static int ballCnt = 0;
+	boolean barCollisionFlag = false;
 	 	
 	Ball(){
 		this.setBounds(0, 0, Variable.WIDTH, Variable.HEIGHT);
-		ballCnt++;
 		
 		x = Variable.WIDTH/2 - Variable.BALL_SIZE/2;
 		y = Variable.BAR_Y - Variable.BALL_SIZE - 10; 
@@ -34,7 +33,6 @@ public class Ball extends JComponent {
 					x += (int)(distX * Math.cos(Math.toRadians(deg)));  // add x displacement
 					y += (int)(distY * Math.sin(Math.toRadians(deg)));  // add y displacement
 					ballRect.setRect(x, y, Variable.BALL_SIZE, Variable.BALL_SIZE);
-					//System.out.println("ballRect : " + ballRect + " " + deg);
 					repaint();
 				}
 			} catch (InterruptedException e) {
@@ -48,5 +46,12 @@ public class Ball extends JComponent {
 		Graphics2D g2 = (Graphics2D)g;
 		g2.setColor(Color.WHITE);
 		g2.fillOval(x, y, Variable.BALL_SIZE, Variable.BALL_SIZE);
+	}
+	public void setMovingContext(int x, int y, int distX, int distY, int deg) {
+		this.x = x;
+		this.y = y;
+		this.distX = distX;
+		this.distY = distY;
+		this.deg = deg;
 	}
 }

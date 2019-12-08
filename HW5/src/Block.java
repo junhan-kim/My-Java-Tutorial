@@ -18,12 +18,11 @@ public class Block extends JComponent {
 	int rBlockWidth;
 	int rBlockHeight;
 	Rectangle blockRect;
-	
+	static int blockCnt = 0;	
 	Thread blockBlinkThread;
 	boolean blinkFlag = false;
 	
 	Block(int type, int stage, int i, int j){
-		// i almost cried.. since swing's layout setting is very confused!!!
 		this.setBounds(0, 0, Variable.WIDTH, Variable.HEIGHT);
 				
 		this.type = type;
@@ -31,6 +30,7 @@ public class Block extends JComponent {
 		this.iParam = i;
 		this.jParam = j;
 		blockRect = new Rectangle();
+		blockCnt++;
 		
 		blockBlinkThread = new Thread(()->{
 			try {
@@ -81,5 +81,9 @@ public class Block extends JComponent {
 		else if(type == 0 && blinkFlag)	g2.setPaint(new Color(237, 244, 4));
 		else g2.setPaint(Color.MAGENTA);
 		g2.fillRect(rBlockX, rBlockY, rBlockWidth, rBlockHeight);	
+	}
+	
+	public static int getNewBlockType() {
+		return (int)(Math.random()*SPECIAL_BLOCK_CHANCE);
 	}
 }
